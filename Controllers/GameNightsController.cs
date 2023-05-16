@@ -80,6 +80,11 @@ namespace GameNightWithFriends.Controllers
             {
                 return BadRequest();
             }
+            //GUARD CLAUSE WE PUT 
+            if (gameNight.MinimumPlayers < 2)
+            {
+                return BadRequest(new { Message = "You need at least TWO Players" });
+            }
 
             // Tell the database to consider everything in gameNight to be _updated_ values. When
             // the save happens the database will _replace_ the values in the database with the ones from gameNight
@@ -124,6 +129,16 @@ namespace GameNightWithFriends.Controllers
         [HttpPost]
         public async Task<ActionResult<GameNight>> PostGameNight(GameNight gameNight)
         {
+            //We put this in OURSELVES from the video.
+            //Its called a GUARD CLAUSE
+            //Lets us control the code 
+            if (gameNight.MinimumPlayers < 2)
+            {
+                return BadRequest(new { Message = "You need at least TWO Players" });
+            }
+
+
+
             // Indicate to the database context we want to add this new record
             _context.GameNights.Add(gameNight);
             await _context.SaveChangesAsync();
